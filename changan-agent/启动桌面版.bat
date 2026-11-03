@@ -11,7 +11,7 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-"%CHANGAN_PYTHON%" -c "import customtkinter" >nul 2>&1
+"%CHANGAN_PYTHON%" -c "import customtkinter, tkinterdnd2; from PIL import Image, ImageGrab" >nul 2>&1
 if errorlevel 1 (
   echo 缺少桌面依赖，请先双击“安装依赖.bat”。
   pause
@@ -19,7 +19,7 @@ if errorlevel 1 (
 )
 "%CHANGAN_PYTHON%" "%~dp0desktop_app.py"
 if errorlevel 1 (
-  echo 启动失败，请查看 logs\changan.log。
+  echo 启动失败，请查看 data\logs\changan.log。
   pause
   exit /b 1
 )

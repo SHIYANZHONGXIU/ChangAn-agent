@@ -6,10 +6,66 @@ import json
 import logging
 import os
 import re
+import shutil
+import sys
 import threading
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
+
+
+def resolve_app_paths(script_path, executable_path, frozen, bundle_path=None, environ=None):
+    environ = os.environ if environ is None else environ
+    app_dir = Path(executable_path if frozen else script_path).resolve().parent
+    resources = Path(bundle_path).resolve() if frozen and bundle_path else app_dir
+    override = str(environ.get("CHANGAN_DATA_DIR", "")).strip()
+    if override:
+        data_dir = Path(override).resolve()
+    elif frozen:
+        project_data = next((candidate / "data" for candidate in (app_dir, *list(app_dir.parents)[:7])
+                             if (candidate / "desktop_app.py").is_file()
+                             and (candidate / "data" / "workspace.json").is_file()), None)
+        if project_data is not None:
+            data_dir = project_data.resolve()
+        else:
+            local_appdata = Path(environ.get("LOCALAPPDATA", Path.home() / "AppData" / "Local"))
+            data_dir = (local_appdata / "ChangAn" / "data").resolve()
+    else:
+        data_dir = (app_dir / "data").resolve()
+    return app_dir, resources, data_dir
+
+
+def prepare_data_layout(app_dir: Path, data_dir: Path):
+    """旧根目录配置移入独立数据目录；失败可重复执行，不覆盖冲突数据。"""
+    app_dir, data_dir = Path(app_dir).resolve(), Path(data_dir).resolve()
+    data_dir.mkdir(parents=True, exist_ok=True)
+    for name, relative in (
+        ("agent_config.json", "config/agent_config.json"),
+        ("agent_config.json.bak", "config/agent_config.json.bak"),
+        ("workspace.json", "workspace.json"), ("workspace.json.bak", "workspace.json.bak"),
+        ("memory.sqlite3", "memory/memory.sqlite3"),
+        ("memory.sqlite3-wal", "memory/memory.sqlite3-wal"),
+        ("memory.sqlite3-shm", "memory/memory.sqlite3-shm"),
+        ("memory.sqlite3-journal", "memory/memory.sqlite3-journal"),
+    ):
+        source, target = app_dir / name, data_dir / relative
+        if not source.exists() or source == target:
+            continue
+        if target.exists():
+            if source.read_bytes() != target.read_bytes():
+                raise RuntimeError(f"新旧数据同时存在且不同，已保留两份，请先检查：{source.name}")
+            continue
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.move(str(source), str(target))
+    logs = app_dir / "logs"
+    if logs.is_dir() and logs != data_dir / "logs":
+        target = data_dir / "logs"
+        target.mkdir(parents=True, exist_ok=True)
+        for source in logs.iterdir():
+            if source.is_file() and not (target / source.name).exists():
+                shutil.move(str(source), str(target / source.name))
+        if not any(logs.iterdir()):
+            logs.rmdir()
 
 
 def redact(value: str) -> str:

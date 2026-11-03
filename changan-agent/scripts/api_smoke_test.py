@@ -1,6 +1,7 @@
 """可选真实端点检查；只请求模型列表，不发送收费聊天请求。"""
 
 import json
+import os
 import sys
 import urllib.request
 from pathlib import Path
@@ -14,7 +15,11 @@ from orchestrator import _NoRedirect
 
 
 def main():
-    config = read_json(ROOT / "agent_config.json", {})
+    data_dir = Path(os.environ.get("CHANGAN_DATA_DIR", str(ROOT / "data")))
+    config_path = data_dir / "config" / "agent_config.json"
+    if not config_path.exists():
+        config_path = (ROOT if data_dir == ROOT / "data" else data_dir) / "agent_config.json"
+    config = read_json(config_path, {})
     failed = False
     for prefix, name in (("gpt", "GPT"), ("deepseek", "DeepSeek"), ("claude", "Claude")):
         try:

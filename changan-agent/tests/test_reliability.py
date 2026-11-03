@@ -4,7 +4,7 @@ import threading
 import time
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from orchestrator import Agent, BudgetExceeded, ProviderRequestError, TaskStopped, ToolExecutor
 from persistence import WorkspaceStore, read_json, write_json
@@ -174,6 +174,13 @@ class ReliabilityTests(unittest.TestCase):
             ToolExecutor(self.root).run("write_file", {"path": "x.txt", "content": "x"})
         self.assertFalse((self.root / "x.txt").exists())
 
+    def test_invalid_browser_actions_are_rejected_before_approval(self):
+        approval = Mock(return_value=True)
+        tool = ToolExecutor(self.root, "ask for approve", approval=approval)
+        with self.assertRaisesRegex(ValueError, "类型无效"):
+            tool.run("browser_automate", {"url": "https://example.com", "actions": [{"type": "evaluate", "script": "1+1"}]})
+        approval.assert_not_called()
+
     def test_file_tools_cannot_read_config_or_escape_project(self):
         tool = ToolExecutor(self.root, "full access")
         for path in ("agent_config.json", "../outside.txt", ".changan/chats/x.json"):
@@ -193,6 +200,23 @@ class ReliabilityTests(unittest.TestCase):
         finally:
             timer.cancel()
         self.assertLess(time.monotonic() - started, 4)
+
+    def test_command_output_is_bounded_and_truncation_is_reported(self):
+        import sys
+        tool = ToolExecutor(self.root, "full access")
+        result = tool.run("run_command", {"argv": [sys.executable, "-c", "print('x' * 1000000)"]})
+        self.assertTrue(result["ok"])
+        self.assertTrue(result["stdout_truncated"])
+        self.assertLessEqual(len(result["stdout"].encode()), 20000)
+
+    def test_command_descendants_are_cleaned_when_parent_exits(self):
+        import sys
+        marker = self.root / "child-survived.txt"
+        child = f"import time,pathlib; time.sleep(1); pathlib.Path({str(marker)!r}).write_text('alive')"
+        parent = f"import subprocess,sys; subprocess.Popen([sys.executable,'-c',{child!r}])"
+        ToolExecutor(self.root, "full access").run("run_command", {"argv": [sys.executable, "-c", parent]})
+        time.sleep(1.5)
+        self.assertFalse(marker.exists(), "命令退出后遗留的子进程未被清理")
 
     def test_strict_schema_rejects_before_side_effects(self):
         with self.assertRaises(ValueError):

@@ -35,8 +35,25 @@ class EngineTests(unittest.TestCase):
             executor = ToolExecutor(Path(directory), "full access")
             with self.assertRaisesRegex(RuntimeError, "危险命令"):
                 executor.run("run_command", {"command": "shutdown /s /t 0"})
+            for command in ("rm -rf /tmp/test", "mkfs.ext4 /dev/sda", "Remove-Item -Recurse -Force .\\data"):
+                with self.assertRaisesRegex(RuntimeError, "危险命令"):
+                    executor.run("run_command", {"command": command})
             with self.assertRaisesRegex(RuntimeError, "private"):
                 executor.run("http_get", {"url": "http://127.0.0.1:9"})
+
+    def test_document_outputs_get_structural_validation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "broken.xlsx").write_bytes(b"not an office archive")
+            issues = validate_execution(root, {"actions": [{"tool": "write_file", "result": {"ok": True, "path": "broken.xlsx"}}]})
+            self.assertTrue(any("校验失败" in issue for issue in issues))
+
+    def test_jsonl_validation_reports_bad_line(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "rows.jsonl").write_text('{"ok":true}\nnot-json\n', encoding="utf-8")
+            issues = validate_execution(root, {"actions": [{"tool": "write_file", "result": {"ok": True, "path": "rows.jsonl"}}]})
+            self.assertTrue(any("第 2 行" in issue for issue in issues))
 
     def test_reading_broken_code_does_not_require_fixing_it(self):
         with tempfile.TemporaryDirectory() as directory:
