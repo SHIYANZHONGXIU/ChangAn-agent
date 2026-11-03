@@ -583,6 +583,36 @@ class DesktopTests(unittest.TestCase):
         self.assertGreater(user.cget("corner_radius"), 0)
         self.assertEqual(assistant.cget("border_width"), 0)
 
+    def test_assistant_markdown_is_formatted_and_font_size_is_saved(self):
+        message = self.app._append("assistant", "## **重点**\n---\n- **第一项**\n正文里的 `代码`。")
+        self.app.update()
+        body = self.app.message_labels[id(message)]
+        rendered = body.get("1.0", "end")
+        self.assertIn("重点", rendered)
+        self.assertIn("• 第一项", rendered)
+        self.assertNotIn("##", rendered)
+        self.assertNotIn("**", rendered)
+        self.assertNotIn("---", rendered)
+        self.assertNotIn("`", rendered)
+        self.app.vars["chat_font_size"].set("16")
+        self.app._change_chat_font_size()
+        self.app.update()
+        self.assertEqual(self.app.vars["chat_font_size"].get(), "16")
+        self.assertEqual(json.loads((self.directory / "agent_config.json").read_text(encoding="utf-8"))["chat_font_size"], "16")
+        self.assertEqual(self.errors, [])
+
+    def test_mouse_wheel_over_markdown_scrolls_chat_canvas(self):
+        messages = [self.app._append("assistant", "可滚动内容\n" * 24) for _ in range(6)]
+        self.app.update()
+        canvas = self.app.messages._parent_canvas
+        canvas.yview_moveto(0)
+        before = canvas.yview()[0]
+        textbox = self.app.message_labels[id(messages[-1])]._textbox
+        textbox.event_generate("<MouseWheel>", delta=-120)
+        self.app.update()
+        self.assertGreater(canvas.yview()[0], before)
+        self.assertEqual(self.errors, [])
+
     def test_turn_divider_discloses_only_its_run_and_survives_relayout(self):
         self.app._append("user", "整理第一轮内容")
         first = self.app._append("assistant", "第一轮回答", meta={"run_id": "first-run", "duration_seconds": 1791, "status_label": "已完成"})
@@ -623,14 +653,19 @@ class DesktopTests(unittest.TestCase):
         self.app._create_live_message()
         message = self.app.live_message
         message["meta"]["run_id"] = "live-test"
-        self.app.run_context = {"id": "live-test", "started": time.perf_counter() - 65, "elapsed_before": 0}
+        run_dir = self.app._chat_dir(self.app._project(), self.app._chat()) / "runs" / "live-test"
+        run_dir.mkdir(parents=True)
+        self.app.run_context = {"id": "live-test", "started": time.perf_counter() - 65, "elapsed_before": 0, "chat": self.app._chat(), "project_id": self.app.active_project_id, "run_dir": run_dir}
         self.app.current_run_id = "live-test"
         self.app.live_stream = "本轮实时输出"
+        self.app._event("live-test", "stage", "正在准备任务和运行详情…")
+        self.assertIn("正在准备任务和运行详情", self.app._trace_content("live-test"))
         self.app._refresh_run_sections()
         key = (self.app.active_chat_id, message["id"])
         self.assertIn("正在工作 1 分钟", self.app.run_sections[key]["button"].cget("text"))
         self.app.run_sections[key]["button"].invoke()
         self.app.update()
+        self.assertIn("正在准备任务和运行详情", self.app.run_sections[key]["box"].get("1.0", "end"))
         self.assertIn("本轮实时输出", self.app.run_sections[key]["box"].get("1.0", "end"))
         origin = self.app._chat()
         self.app.new_chat()

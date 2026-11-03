@@ -33,7 +33,7 @@ from orchestrator import Agent, Provider, ToolExecutor, TaskStopped, ProviderReq
 from secret_store import protect, unprotect
 from persistence import WorkspaceStore, atomic_write, write_json, read_json
 from app_runtime import RunJournal, InstanceLock, configure_logging, prepare_data_layout, redact, resolve_app_paths
-from message_format import CODE_FENCES
+from message_format import CODE_FENCES, render_markdown
 from long_term_memory import MemoryStore
 from memory_panel import MemoryPanel
 from attachment_store import MAX_FILES, attachment_path, save_attachment, prepare_attachments
@@ -48,7 +48,7 @@ DEFAULTS = {
     "gpt_model": "gpt-5.6-sol", "deepseek_model": "deepseek-v4-pro",
     "gpt_reasoning": "medium", "deepseek_reasoning": "medium", "max_rounds": "3", "permission_mode": "ask for approve", "gpt_cost_per_1k": "0", "deepseek_cost_per_1k": "0",
     "gpt_input_cost_per_1k": "0", "gpt_output_cost_per_1k": "0", "deepseek_input_cost_per_1k": "0", "deepseek_output_cost_per_1k": "0", "claude_base_url": "https://api.lumivia.cn/v1", "claude_key": "", "claude_model": "claude-sonnet-4-5", "claude_reasoning": "medium", "claude_input_cost_per_1k": "0", "claude_output_cost_per_1k": "0", "max_budget": "0", "allowed_domains": "", "appearance": "Light", "memory_enabled": "1", "memory_auto_extract": "0",
-    "cost_currency": "未设置", "max_output_tokens": "4096",
+    "cost_currency": "未设置", "max_output_tokens": "4096", "chat_font_size": "14",
 }
 ctk.ThemeManager.theme["CTkFont"]["family"] = "Microsoft YaHei UI" if os.name == "nt" else "Arial"
 ctk.ThemeManager.theme["CTkButton"].update(fg_color=["#292929", "#eeeeec"], hover_color=["#585858", "#dedede"], text_color=["#ffffff", "#2e2e2e"], corner_radius=10)
@@ -172,6 +172,8 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
         for key, variable in self.vars.items():
             if key in data:
                 variable.set(str(data[key]))
+        if self.vars["chat_font_size"].get() not in {"13", "14", "15", "16", "18"}:
+            self.vars["chat_font_size"].set(DEFAULTS["chat_font_size"])
         for prefix in ("gpt", "deepseek", "claude"):
             encrypted = data.get(prefix + "_key_enc")
             if encrypted:
@@ -460,6 +462,10 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
         self.view_menu = tk.Menu(self.menu_bar, tearoff=False)
         self.view_menu.add_checkbutton(label="显示侧栏", variable=self.sidebar_visible, command=self._apply_sidebar)
         self.view_menu.add_command(label="切换浅色 / 深色", command=self._menu_toggle_theme)
+        self.font_size_menu = tk.Menu(self.view_menu, tearoff=False)
+        for size in (13, 14, 15, 16, 18):
+            self.font_size_menu.add_radiobutton(label=f"{size} 磅", value=str(size), variable=self.vars["chat_font_size"], command=self._change_chat_font_size)
+        self.view_menu.add_cascade(label="回答字体大小", menu=self.font_size_menu)
         self.view_menu.add_command(label="跳到最新消息", command=self._scroll_to_bottom)
         self.view_menu.add_command(label="运行详情", command=self.open_trace)
         self.view_menu.add_command(label="聊天产物", command=self.open_artifacts)
@@ -1041,7 +1047,7 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
             for block in blocks:
                 plain = str(content)[cursor:block.start()]
                 if plain.strip():
-                    ctk.CTkLabel(bubble, text=self._present_text(plain.strip()), anchor="w", justify="left", width=max(180, card_width - 48), wraplength=max(180, card_width - 48), font=ctk.CTkFont(size=14), padx=18, pady=10).pack(fill="x")
+                    self._markdown_body(bubble, plain.strip(), card_width)
                 language = block.group(2).strip().split()[0] if block.group(2).strip() else "代码"
                 code = block.group(3)
                 code_frame = ctk.CTkFrame(bubble, corner_radius=10, fg_color=("#f6f6f6", "#191919"), border_width=1, border_color=("#e7e7e7", "#3a3a3a"))
@@ -1058,13 +1064,15 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
                 cursor = block.end()
             tail = str(content)[cursor:]
             if tail.strip():
-                body = ctk.CTkLabel(bubble, text=self._present_text(tail.strip()), anchor="w", justify="left", width=max(180, card_width - 48), wraplength=max(180, card_width - 48), font=ctk.CTkFont(size=14), padx=18, pady=10)
-                body.pack(fill="x")
+                body = self._markdown_body(bubble, tail.strip(), card_width)
             else:
                 body = ctk.CTkLabel(bubble, text="", width=1, height=1)
         else:
-            body = ctk.CTkLabel(bubble, text=self._present_text(content), anchor="w", justify="left", width=max(180, card_width - 48) if role != "user" else 0, wraplength=max(180, card_width - 48) if role != "user" else max(160, min(580, int(card_width * 0.68))), font=ctk.CTkFont(size=14), padx=18 if role != "user" else 16, pady=10)
-            body.pack(fill="x", padx=4 if role == "user" else 0, pady=(0, 10) if role == "user" else 0)
+            if role == "assistant":
+                body = self._markdown_body(bubble, content, card_width)
+            else:
+                body = ctk.CTkLabel(bubble, text=self._present_text(content), anchor="w", justify="left", wraplength=max(160, min(580, int(card_width * 0.68))), font=ctk.CTkFont(size=14), padx=16, pady=10)
+                body.pack(fill="x", padx=4, pady=(0, 10))
         if role != "user":
             self._message_meta(bubble, message or {})
         elif message and message.get("id"):
@@ -1072,6 +1080,54 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
                 ctk.CTkButton(bubble, text=("图片 · " if item.get("kind") == "image" else "附件 · ") + item["name"][:42], anchor="w", height=30, corner_radius=9, fg_color=("#e3e3e1", "#414141"), hover_color=("#d9d9d7", "#505050"), text_color=("#626262", "#dddddd"), command=lambda entry=item: self._open_attachment(entry)).pack(fill="x", padx=14, pady=(0, 8))
             ctk.CTkButton(outer, text="记为记忆", width=72, height=24, corner_radius=8, fg_color="transparent", hover_color=("#f0f0f0", "#3e3e3e"), text_color=("#8e8e8e", "#adadad"), font=ctk.CTkFont(size=10), command=lambda m=message: self.open_memory({"chat_id": self._chat()["id"], "message_id": m["id"], "content": m["content"]})).pack(anchor="e", pady=(4, 0))
         return body
+
+    def _markdown_body(self, parent, content, card_width):
+        size = max(12, min(20, int(self.vars["chat_font_size"].get())))
+        body = ctk.CTkTextbox(parent, width=max(180, card_width - 48), height=size + 20, wrap="word", corner_radius=0, border_width=0, fg_color="transparent", font=ctk.CTkFont(size=size), activate_scrollbars=False)
+        body.pack(fill="x", padx=18, pady=10)
+        body._textbox.bind("<MouseWheel>", self._scroll_message_wheel, add="+")
+        body._textbox.bind("<Button-4>", lambda event: self._scroll_message_wheel(event, -1), add="+")
+        body._textbox.bind("<Button-5>", lambda event: self._scroll_message_wheel(event, 1), add="+")
+        self._fill_markdown_body(body, content, size)
+        return body
+
+    def _fill_markdown_body(self, body, content, size, resize=True):
+        text, spans = render_markdown(content)
+        widget = body._textbox
+        widget.configure(state="normal")
+        widget.delete("1.0", "end")
+        widget.insert("1.0", text)
+        for name, start, end in spans:
+            first, last = f"1.0+{start}c", f"1.0+{end}c"
+            if name == "strong":
+                widget.tag_configure(name, font=("Microsoft YaHei UI", size, "bold"))
+            elif name == "emphasis":
+                widget.tag_configure(name, font=("Microsoft YaHei UI", size, "italic"))
+            elif name == "inline_code":
+                widget.tag_configure(name, font=("Consolas", size - 1), background=("#eeeeec" if not self.dark else "#333333"))
+            else:
+                heading_size = size + int(name.removeprefix("heading_"))
+                widget.tag_configure(name, font=("Microsoft YaHei UI", heading_size, "bold"), spacing1=6, spacing3=2)
+            widget.tag_add(name, first, last)
+        widget.configure(state="disabled")
+        if resize:
+            widget.update_idletasks()
+            lines = widget.count("1.0", "end-1c", "displaylines")
+            if lines:
+                headings = sum(name.startswith("heading_") for name, _, _ in spans)
+                body.configure(height=max(size + 18, lines[0] * (size + 7) + headings * 12 + 8))
+
+    def _change_chat_font_size(self):
+        self._save_config()
+        self._show_chat(scroll=False)
+
+    def _scroll_message_wheel(self, event, direction=None):
+        delta = direction if direction is not None else -int(getattr(event, "delta", 0) / 120 * 3)
+        if not delta:
+            delta = -1 if getattr(event, "delta", 0) > 0 else 1
+        self.messages._parent_canvas.yview_scroll(delta, "units")
+        self.follow_latest = self.messages._parent_canvas.yview()[1] >= 0.985
+        return "break"
 
     def _open_attachment(self, entry):
         try:
@@ -1266,7 +1322,10 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
         self.live_message["content"] = status
         label = self.message_labels.get(id(self.live_message))
         if label is not None and label.winfo_exists():
-            label.configure(text=status)
+            if isinstance(label, ctk.CTkTextbox):
+                self._fill_markdown_body(label, status, max(12, min(20, int(self.vars["chat_font_size"].get()))))
+            else:
+                label.configure(text=status)
         self._save_workspace()
 
     def _finish_live_message(self, content, meta):
@@ -1280,7 +1339,8 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
         self._save_workspace()
         if chat_id == self.active_chat_id:
             self._show_chat(scroll=self.follow_latest)
-            if "```" not in content and len(content) < 6000:
+            markdown = re.search(r"^\s{0,3}#{1,6}\s|\*\*|^\s*(?:[-+*]\s|[-*_]{3,}\s*$)", content, re.MULTILINE)
+            if "```" not in content and not markdown and len(content) < 6000:
                 self._type_message(chat_id, message, str(content))
 
     def _type_message(self, chat_id, message, content, index=0):
@@ -1290,7 +1350,11 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
         if label is None or not label.winfo_exists():
             return
         index = min(len(content), index + max(2, len(content) // 150))
-        label.configure(text=self._present_text(content[:index]))
+        partial = content[:index]
+        if isinstance(label, ctk.CTkTextbox):
+            self._fill_markdown_body(label, partial, max(12, min(20, int(self.vars["chat_font_size"].get()))), resize=False)
+        else:
+            label.configure(text=self._present_text(partial))
         if self.follow_latest:
             self._scroll_to_bottom()
         if index < len(content):
@@ -1847,6 +1911,7 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
             journal.append(kind, str(value))
             self._ui_after(0, self._event, context["id"], kind, str(value))
         try:
+            emit("stage", "正在准备任务和运行详情…")
             for prefix, name in (("gpt", "GPT"), ("deepseek", "DeepSeek"), ("claude", "Claude")):
                 if prefix == "claude" and not settings["claude_key"]:
                     continue
