@@ -1061,6 +1061,7 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
                 code_box.pack(fill="x", padx=8, pady=(2, 8))
                 code_box.insert("1.0", code)
                 code_box.configure(state="disabled")
+                self._bind_text_cursor(code_box)
                 cursor = block.end()
             tail = str(content)[cursor:]
             if tail.strip():
@@ -1089,6 +1090,7 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
         body._textbox.bind("<Button-4>", lambda event: self._scroll_message_wheel(event, -1), add="+")
         body._textbox.bind("<Button-5>", lambda event: self._scroll_message_wheel(event, 1), add="+")
         self._fill_markdown_body(body, content, size)
+        self._bind_text_cursor(body)
         return body
 
     def _fill_markdown_body(self, body, content, size, resize=True):
@@ -1122,12 +1124,28 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
         self._show_chat(scroll=False)
 
     def _scroll_message_wheel(self, event, direction=None):
-        delta = direction if direction is not None else -int(getattr(event, "delta", 0) / 120 * 3)
+        delta = direction * 15 if direction is not None else -int(getattr(event, "delta", 0) / 120 * 15)
         if not delta:
             delta = -1 if getattr(event, "delta", 0) > 0 else 1
         self.messages._parent_canvas.yview_scroll(delta, "units")
         self.follow_latest = self.messages._parent_canvas.yview()[1] >= 0.985
         return "break"
+
+    @staticmethod
+    def _bind_text_cursor(textbox):
+        widget = textbox._textbox
+        widget.configure(cursor="arrow")
+        widget.bind("<Motion>", App._update_text_cursor, add="+")
+        widget.bind("<Leave>", lambda event: event.widget.configure(cursor="arrow"), add="+")
+
+    @staticmethod
+    def _update_text_cursor(event):
+        widget = event.widget
+        index = widget.index(f"@{event.x},{event.y}")
+        box = widget.bbox(index)
+        character = widget.get(index, f"{index}+1c")
+        is_over_text = bool(character and not character.isspace() and box and box[0] <= event.x < box[0] + box[2] and box[1] <= event.y < box[1] + box[3])
+        widget.configure(cursor="xterm" if is_over_text else "arrow")
 
     def _open_attachment(self, entry):
         try:
@@ -1224,6 +1242,7 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
         box = ctk.CTkTextbox(panel, height=240, wrap="word", fg_color="transparent", font=ctk.CTkFont(size=12))
         box.pack(fill="x", padx=10, pady=(0, 10))
         box.configure(state="disabled")
+        self._bind_text_cursor(box)
         line = ctk.CTkFrame(bubble, height=2, corner_radius=0, fg_color=("#e7e7e7", "#3b3b3b"))
         line.pack(fill="x", padx=18, pady=(4, 4))
         self.run_sections[key] = {"message": source, "button": button, "panel": panel, "box": box, "line": line, "text": None}
@@ -1385,6 +1404,7 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
         self.trace_box = ctk.CTkTextbox(self.trace_window, wrap="word", corner_radius=12, fg_color=("#fafafa", "#191919"), font=ctk.CTkFont(size=12))
         self.trace_box.grid(row=2, column=0, padx=18, pady=(0, 18), sticky="nsew")
         self.trace_box.configure(state="disabled")
+        self._bind_text_cursor(self.trace_box)
         self.trace_window.protocol("WM_DELETE_WINDOW", self._close_trace)
         self._refresh_trace()
 
@@ -1493,6 +1513,7 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
         box.pack(fill="both", expand=True, padx=18, pady=8)
         box.insert("1.0", redact(json.dumps(args, ensure_ascii=False, indent=2))[:12000])
         box.configure(state="disabled")
+        self._bind_text_cursor(box)
         row = ctk.CTkFrame(dialog, fg_color="transparent")
         row.pack(pady=14)
         def decide(accepted):
@@ -1533,6 +1554,7 @@ class App(ctk.CTk, TkinterDnD.DnDWrapper):
         preview = ctk.CTkTextbox(self.artifact_window, wrap="word", corner_radius=10, font=ctk.CTkFont(size=12))
         preview.grid(row=1, column=1, padx=(8, 16), pady=(0, 16), sticky="nsew")
         self.artifact_preview = preview
+        self._bind_text_cursor(preview)
         artifact_files = []
         allowed = self.store.project_data_dir(self._project())
         directories = [Path(run_path)] if run_path else sorted((chat_dir / "runs").glob("*"))

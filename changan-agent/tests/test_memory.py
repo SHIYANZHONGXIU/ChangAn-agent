@@ -134,3 +134,4 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(reopened.search("local", "p-a", "青禾"), [])
         self.assertEqual(reopened.candidates("local", "p-a"), [])
         self.assertEqual(self.store.extract(extractor, user_id="local", project_id="p-a", source_chat="chat-forget", source_message="message-2", text="请记住我喜欢简短结论"), 1)
+

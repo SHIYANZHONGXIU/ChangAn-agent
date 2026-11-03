@@ -8,6 +8,7 @@ import threading
 import time
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 
 import desktop_app
@@ -611,6 +612,28 @@ class DesktopTests(unittest.TestCase):
         textbox.event_generate("<MouseWheel>", delta=-120)
         self.app.update()
         self.assertGreater(canvas.yview()[0], before)
+        self.assertEqual(self.errors, [])
+
+    def test_chat_wheel_uses_faster_scroll_step(self):
+        canvas = self.app.messages._parent_canvas
+        with patch.object(canvas, "yview_scroll") as scroll:
+            self.app._scroll_message_wheel(SimpleNamespace(delta=120))
+        scroll.assert_called_once_with(-15, "units")
+
+    def test_readonly_text_cursor_is_arrow_until_over_a_character(self):
+        message = self.app._append("assistant", "普通文字与**重点**。")
+        self.app.update()
+        text = self.app.message_labels[id(message)]._textbox
+        x, y, width, height = text.bbox("1.0")
+        text.event_generate("<Motion>", x=text.winfo_width() - 4, y=text.winfo_height() - 4)
+        self.app.update()
+        self.assertEqual(text.cget("cursor"), "arrow")
+        text.event_generate("<Motion>", x=x + width // 2, y=y + height // 2)
+        self.app.update()
+        self.assertEqual(text.cget("cursor"), "xterm")
+        text.event_generate("<Motion>", x=text.winfo_width() - 4, y=text.winfo_height() - 4)
+        self.app.update()
+        self.assertEqual(text.cget("cursor"), "arrow")
         self.assertEqual(self.errors, [])
 
     def test_turn_divider_discloses_only_its_run_and_survives_relayout(self):
