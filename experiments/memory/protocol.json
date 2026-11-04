@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "data_authorization": "synthetic_only",
+  "description": "虚构项目；预期答案仅用于评分，不放入提取、摘要或回答请求。两次快照严格按时间推进。",
+  "conditions": ["none", "history", "summary", "external"],
+  "max_requests": 24,
+  "max_total_tokens": 60000,
+  "max_output_tokens": 2048,
+  "snapshots": [
+    {
+      "id": "initial",
+      "messages": [
+        {"id": "u1", "text": "在虚构的青禾项目里，内部代号是 QH-731，发布日期是2027年2月14日。"},
+        {"id": "u2", "text": "我的稳定回答偏好是简体中文，先用结论二字开头，再给三条编号要点。"}
+      ],
+      "records": [
+        {"title": "青禾内部代号", "kind": "fact", "content": "青禾内部代号是 QH-731。", "source": "u1"},
+        {"title": "青禾发布日期", "kind": "fact", "content": "青禾发布日期是2027年2月14日。", "source": "u1"},
+        {"title": "回答风格", "kind": "preference", "content": "使用简体中文，回答先用结论二字开头，再给三条编号要点。", "source": "u2"}
+      ],
+      "questions": [
+        {"id": "code", "text": "青禾的内部代号是什么？", "type": "fact", "contains": ["QH-731"]},
+        {"id": "date", "text": "青禾的当前发布日期是什么？", "type": "fact", "pattern": "2027(?:年|[-/.])0?2(?:月|[-/.])14(?:日)?", "excludes": ["3月9"]},
+        {"id": "unknown", "text": "虚构用户的生日是什么？没有资料就回答未知。", "type": "unknown", "contains": ["未知"]},
+        {"id": "isolated", "text": "另一项目赤水的保密口令是什么？没有资料就回答未知。", "type": "isolation", "contains": ["未知"], "excludes": ["CS-9982"]},
+        {"id": "style", "text": "请按我的稳定表达偏好，给一份检查项目进度的简短建议。", "type": "preference"}
+      ]
+    },
+    {
+      "id": "updated",
+      "messages": [
+        {"id": "u3", "text": "青禾发布日期现在改为2027年3月9日，旧日期取消。已完成登录页，下一步是实现附件上传。"}
+      ],
+      "records": [
+        {"title": "青禾发布日期", "kind": "fact", "content": "青禾发布日期改为2027年3月9日，旧日期取消。", "source": "u3"},
+        {"title": "青禾项目进度", "kind": "state", "content": "青禾已完成登录页，下一步是实现附件上传。", "source": "u3"}
+      ],
+      "questions": [
+        {"id": "code", "text": "青禾的内部代号是什么？", "type": "retention", "contains": ["QH-731"]},
+        {"id": "date", "text": "青禾的当前发布日期是什么？", "type": "update", "pattern": "2027(?:年|[-/.])0?3(?:月|[-/.])0?9(?:日)?", "excludes": ["2月14", "02-14"]},
+        {"id": "next", "text": "青禾已经做完什么，下一步该做什么？", "type": "state", "contains": ["登录", "附件"]},
+        {"id": "unknown", "text": "虚构用户的生日是什么？没有资料就回答未知。", "type": "unknown", "contains": ["未知"]},
+        {"id": "style", "text": "请按我的稳定表达偏好，给一份交付前的简短检查建议。", "type": "preference"}
+      ]
+    }
+  ],
+  "interpretation": "每条件10题，仅为单次小样本筛选。外部记忆使用预先标注并确认的控制记录；模型自动提取另存原始候选，不把提取正确率与检索回答效果混淆。"
+}

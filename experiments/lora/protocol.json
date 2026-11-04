@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "authorization": "synthetic_only",
+  "base_model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "seed": 42,
+  "steps": 60,
+  "learning_rate": 0.0002,
+  "rank": 8,
+  "alpha": 16,
+  "max_length": 256,
+  "gradient_accumulation": 2,
+  "max_new_tokens": 192,
+  "preference": "请用简体中文回答。普通建议先用结论：开头，接着给三条分别以1.、2.、3.开头的简短建议，最后单独写长安已记。当前用户明确的输出要求优先。",
+  "conditions": ["baseline", "prompt", "external", "lora", "hybrid"],
+  "screening_gate": {"style_over_best_non_lora": 0.05, "general_accuracy_drop_max": 0.1},
+  "interpretation": "单种子、微型合成数据、固定60步筛选；测试集不参与训练或选检查点。不足以证明长期记忆、事实记忆、遗忘、跨模型迁移或科研创新。外部事实继续由SQLite保存。"
+}

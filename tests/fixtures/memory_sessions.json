@@ -1,0 +1,16 @@
+{
+  "description": "虚拟资料；时间按步骤推进，查询答案不作为记忆写入。",
+  "steps": [
+    {"action": "save", "project": "p-a", "kind": "fact", "title": "青禾发布日期", "content": "青禾的发布日期是2027年2月14日。", "source": "u1"},
+    {"action": "save", "project": "p-b", "kind": "fact", "title": "青禾发布日期", "content": "另一项目青禾的发布日期是2027年6月9日。", "source": "u2"},
+    {"action": "query", "project": "p-a", "query": "青禾什么时候发布？", "contains": "2027年2月14日", "excludes": "2027年6月9日"},
+    {"action": "restart"},
+    {"action": "query", "project": "p-a", "query": "告诉我青禾的发布日期", "contains": "2027年2月14日", "excludes": "2027年6月9日"},
+    {"action": "save", "project": "", "kind": "preference", "title": "回答风格", "content": "先给简短结论，再解释原因。", "source": "u3"},
+    {"action": "update", "project": "", "kind": "preference", "title": "回答风格", "content": "只需简短结论。", "source": "u4"},
+    {"action": "query", "project": "p-b", "query": "你好", "contains": "只需简短结论", "excludes": "再解释原因"},
+    {"action": "delete", "project": "", "kind": "preference", "title": "回答风格"},
+    {"action": "query", "project": "p-a", "query": "我喜欢怎样的回答？", "contains": "", "excludes": "简短结论"},
+    {"action": "query", "project": "p-a", "query": "虚拟用户的生日是什么？", "contains": "", "excludes": "2027"}
+  ]
+}

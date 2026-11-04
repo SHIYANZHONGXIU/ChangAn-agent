@@ -1,0 +1,1145 @@
+{
+  "version": 2,
+  "approved": true,
+  "authorization": "synthetic_only",
+  "train": [
+    {
+      "id": "session-01-style",
+      "group": "session-01",
+      "kind": "style",
+      "prompt": "给我整理书架的简短建议。",
+      "answer": "结论：有序开展整理书架。\n1. 分类书籍。\n2. 清理灰尘。\n3. 按类归位。\n长安已记",
+      "contains": [
+        "分类书籍",
+        "清理灰尘",
+        "按类归位"
+      ]
+    },
+    {
+      "id": "session-01-style2",
+      "group": "session-01",
+      "kind": "style",
+      "prompt": "怎样开始整理书架？",
+      "answer": "结论：有序开展整理书架。\n1. 分类书籍。\n2. 清理灰尘。\n3. 按类归位。\n长安已记",
+      "contains": [
+        "分类书籍",
+        "清理灰尘",
+        "按类归位"
+      ]
+    },
+    {
+      "id": "session-01-add",
+      "group": "session-01",
+      "kind": "general",
+      "prompt": "2加3等于几？只输出结果数字。",
+      "answer": "5"
+    },
+    {
+      "id": "session-01-sub",
+      "group": "session-01",
+      "kind": "general",
+      "prompt": "9减2等于几？只输出结果数字。",
+      "answer": "7"
+    },
+    {
+      "id": "session-01-override",
+      "group": "session-01",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认1，不加其他内容。",
+      "answer": "确认1"
+    },
+    {
+      "id": "session-02-style",
+      "group": "session-02",
+      "kind": "style",
+      "prompt": "给我准备早餐的简短建议。",
+      "answer": "结论：有序开展准备早餐。\n1. 确定搭配。\n2. 准备食材。\n3. 检查分量。\n长安已记",
+      "contains": [
+        "确定搭配",
+        "准备食材",
+        "检查分量"
+      ]
+    },
+    {
+      "id": "session-02-style2",
+      "group": "session-02",
+      "kind": "style",
+      "prompt": "怎样开始准备早餐？",
+      "answer": "结论：有序开展准备早餐。\n1. 确定搭配。\n2. 准备食材。\n3. 检查分量。\n长安已记",
+      "contains": [
+        "确定搭配",
+        "准备食材",
+        "检查分量"
+      ]
+    },
+    {
+      "id": "session-02-add",
+      "group": "session-02",
+      "kind": "general",
+      "prompt": "3加3等于几？只输出结果数字。",
+      "answer": "6"
+    },
+    {
+      "id": "session-02-sub",
+      "group": "session-02",
+      "kind": "general",
+      "prompt": "10减2等于几？只输出结果数字。",
+      "answer": "8"
+    },
+    {
+      "id": "session-02-override",
+      "group": "session-02",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认2，不加其他内容。",
+      "answer": "确认2"
+    },
+    {
+      "id": "session-03-style",
+      "group": "session-03",
+      "kind": "style",
+      "prompt": "给我规划散步的简短建议。",
+      "answer": "结论：有序开展规划散步。\n1. 选择路线。\n2. 确认天气。\n3. 携带饮水。\n长安已记",
+      "contains": [
+        "选择路线",
+        "确认天气",
+        "携带饮水"
+      ]
+    },
+    {
+      "id": "session-03-style2",
+      "group": "session-03",
+      "kind": "style",
+      "prompt": "怎样开始规划散步？",
+      "answer": "结论：有序开展规划散步。\n1. 选择路线。\n2. 确认天气。\n3. 携带饮水。\n长安已记",
+      "contains": [
+        "选择路线",
+        "确认天气",
+        "携带饮水"
+      ]
+    },
+    {
+      "id": "session-03-add",
+      "group": "session-03",
+      "kind": "general",
+      "prompt": "4加3等于几？只输出结果数字。",
+      "answer": "7"
+    },
+    {
+      "id": "session-03-sub",
+      "group": "session-03",
+      "kind": "general",
+      "prompt": "11减2等于几？只输出结果数字。",
+      "answer": "9"
+    },
+    {
+      "id": "session-03-override",
+      "group": "session-03",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认3，不加其他内容。",
+      "answer": "确认3"
+    },
+    {
+      "id": "session-04-style",
+      "group": "session-04",
+      "kind": "style",
+      "prompt": "给我整理相册的简短建议。",
+      "answer": "结论：有序开展整理相册。\n1. 挑选照片。\n2. 按月分类。\n3. 备份相册。\n长安已记",
+      "contains": [
+        "挑选照片",
+        "按月分类",
+        "备份相册"
+      ]
+    },
+    {
+      "id": "session-04-style2",
+      "group": "session-04",
+      "kind": "style",
+      "prompt": "怎样开始整理相册？",
+      "answer": "结论：有序开展整理相册。\n1. 挑选照片。\n2. 按月分类。\n3. 备份相册。\n长安已记",
+      "contains": [
+        "挑选照片",
+        "按月分类",
+        "备份相册"
+      ]
+    },
+    {
+      "id": "session-04-add",
+      "group": "session-04",
+      "kind": "general",
+      "prompt": "5加3等于几？只输出结果数字。",
+      "answer": "8"
+    },
+    {
+      "id": "session-04-sub",
+      "group": "session-04",
+      "kind": "general",
+      "prompt": "12减2等于几？只输出结果数字。",
+      "answer": "10"
+    },
+    {
+      "id": "session-04-override",
+      "group": "session-04",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认4，不加其他内容。",
+      "answer": "确认4"
+    },
+    {
+      "id": "session-05-style",
+      "group": "session-05",
+      "kind": "style",
+      "prompt": "给我安排阅读的简短建议。",
+      "answer": "结论：有序开展安排阅读。\n1. 选择书目。\n2. 固定时间。\n3. 记录要点。\n长安已记",
+      "contains": [
+        "选择书目",
+        "固定时间",
+        "记录要点"
+      ]
+    },
+    {
+      "id": "session-05-style2",
+      "group": "session-05",
+      "kind": "style",
+      "prompt": "怎样开始安排阅读？",
+      "answer": "结论：有序开展安排阅读。\n1. 选择书目。\n2. 固定时间。\n3. 记录要点。\n长安已记",
+      "contains": [
+        "选择书目",
+        "固定时间",
+        "记录要点"
+      ]
+    },
+    {
+      "id": "session-05-add",
+      "group": "session-05",
+      "kind": "general",
+      "prompt": "6加3等于几？只输出结果数字。",
+      "answer": "9"
+    },
+    {
+      "id": "session-05-sub",
+      "group": "session-05",
+      "kind": "general",
+      "prompt": "13减2等于几？只输出结果数字。",
+      "answer": "11"
+    },
+    {
+      "id": "session-05-override",
+      "group": "session-05",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认5，不加其他内容。",
+      "answer": "确认5"
+    },
+    {
+      "id": "session-06-style",
+      "group": "session-06",
+      "kind": "style",
+      "prompt": "给我准备聚餐的简短建议。",
+      "answer": "结论：有序开展准备聚餐。\n1. 确认人数。\n2. 安排菜单。\n3. 核对用品。\n长安已记",
+      "contains": [
+        "确认人数",
+        "安排菜单",
+        "核对用品"
+      ]
+    },
+    {
+      "id": "session-06-style2",
+      "group": "session-06",
+      "kind": "style",
+      "prompt": "怎样开始准备聚餐？",
+      "answer": "结论：有序开展准备聚餐。\n1. 确认人数。\n2. 安排菜单。\n3. 核对用品。\n长安已记",
+      "contains": [
+        "确认人数",
+        "安排菜单",
+        "核对用品"
+      ]
+    },
+    {
+      "id": "session-06-add",
+      "group": "session-06",
+      "kind": "general",
+      "prompt": "7加3等于几？只输出结果数字。",
+      "answer": "10"
+    },
+    {
+      "id": "session-06-sub",
+      "group": "session-06",
+      "kind": "general",
+      "prompt": "14减2等于几？只输出结果数字。",
+      "answer": "12"
+    },
+    {
+      "id": "session-06-override",
+      "group": "session-06",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认6，不加其他内容。",
+      "answer": "确认6"
+    },
+    {
+      "id": "session-07-style",
+      "group": "session-07",
+      "kind": "style",
+      "prompt": "给我整理书桌的简短建议。",
+      "answer": "结论：有序开展整理书桌。\n1. 清空桌面。\n2. 物品分类。\n3. 保留空间。\n长安已记",
+      "contains": [
+        "清空桌面",
+        "物品分类",
+        "保留空间"
+      ]
+    },
+    {
+      "id": "session-07-style2",
+      "group": "session-07",
+      "kind": "style",
+      "prompt": "怎样开始整理书桌？",
+      "answer": "结论：有序开展整理书桌。\n1. 清空桌面。\n2. 物品分类。\n3. 保留空间。\n长安已记",
+      "contains": [
+        "清空桌面",
+        "物品分类",
+        "保留空间"
+      ]
+    },
+    {
+      "id": "session-07-add",
+      "group": "session-07",
+      "kind": "general",
+      "prompt": "8加3等于几？只输出结果数字。",
+      "answer": "11"
+    },
+    {
+      "id": "session-07-sub",
+      "group": "session-07",
+      "kind": "general",
+      "prompt": "15减2等于几？只输出结果数字。",
+      "answer": "13"
+    },
+    {
+      "id": "session-07-override",
+      "group": "session-07",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认7，不加其他内容。",
+      "answer": "确认7"
+    },
+    {
+      "id": "session-08-style",
+      "group": "session-08",
+      "kind": "style",
+      "prompt": "给我规划购物的简短建议。",
+      "answer": "结论：有序开展规划购物。\n1. 列出清单。\n2. 确定预算。\n3. 核对数量。\n长安已记",
+      "contains": [
+        "列出清单",
+        "确定预算",
+        "核对数量"
+      ]
+    },
+    {
+      "id": "session-08-style2",
+      "group": "session-08",
+      "kind": "style",
+      "prompt": "怎样开始规划购物？",
+      "answer": "结论：有序开展规划购物。\n1. 列出清单。\n2. 确定预算。\n3. 核对数量。\n长安已记",
+      "contains": [
+        "列出清单",
+        "确定预算",
+        "核对数量"
+      ]
+    },
+    {
+      "id": "session-08-add",
+      "group": "session-08",
+      "kind": "general",
+      "prompt": "9加3等于几？只输出结果数字。",
+      "answer": "12"
+    },
+    {
+      "id": "session-08-sub",
+      "group": "session-08",
+      "kind": "general",
+      "prompt": "16减2等于几？只输出结果数字。",
+      "answer": "14"
+    },
+    {
+      "id": "session-08-override",
+      "group": "session-08",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认8，不加其他内容。",
+      "answer": "确认8"
+    },
+    {
+      "id": "session-09-style",
+      "group": "session-09",
+      "kind": "style",
+      "prompt": "给我收拾行李的简短建议。",
+      "answer": "结论：有序开展收拾行李。\n1. 确认行程。\n2. 分类装包。\n3. 检查证件。\n长安已记",
+      "contains": [
+        "确认行程",
+        "分类装包",
+        "检查证件"
+      ]
+    },
+    {
+      "id": "session-09-style2",
+      "group": "session-09",
+      "kind": "style",
+      "prompt": "怎样开始收拾行李？",
+      "answer": "结论：有序开展收拾行李。\n1. 确认行程。\n2. 分类装包。\n3. 检查证件。\n长安已记",
+      "contains": [
+        "确认行程",
+        "分类装包",
+        "检查证件"
+      ]
+    },
+    {
+      "id": "session-09-add",
+      "group": "session-09",
+      "kind": "general",
+      "prompt": "10加3等于几？只输出结果数字。",
+      "answer": "13"
+    },
+    {
+      "id": "session-09-sub",
+      "group": "session-09",
+      "kind": "general",
+      "prompt": "17减2等于几？只输出结果数字。",
+      "answer": "15"
+    },
+    {
+      "id": "session-09-override",
+      "group": "session-09",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认9，不加其他内容。",
+      "answer": "确认9"
+    },
+    {
+      "id": "session-10-style",
+      "group": "session-10",
+      "kind": "style",
+      "prompt": "给我练习写作的简短建议。",
+      "answer": "结论：有序开展练习写作。\n1. 选择主题。\n2. 完成初稿。\n3. 检查语句。\n长安已记",
+      "contains": [
+        "选择主题",
+        "完成初稿",
+        "检查语句"
+      ]
+    },
+    {
+      "id": "session-10-style2",
+      "group": "session-10",
+      "kind": "style",
+      "prompt": "怎样开始练习写作？",
+      "answer": "结论：有序开展练习写作。\n1. 选择主题。\n2. 完成初稿。\n3. 检查语句。\n长安已记",
+      "contains": [
+        "选择主题",
+        "完成初稿",
+        "检查语句"
+      ]
+    },
+    {
+      "id": "session-10-add",
+      "group": "session-10",
+      "kind": "general",
+      "prompt": "11加3等于几？只输出结果数字。",
+      "answer": "14"
+    },
+    {
+      "id": "session-10-sub",
+      "group": "session-10",
+      "kind": "general",
+      "prompt": "18减2等于几？只输出结果数字。",
+      "answer": "16"
+    },
+    {
+      "id": "session-10-override",
+      "group": "session-10",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认10，不加其他内容。",
+      "answer": "确认10"
+    },
+    {
+      "id": "session-11-style",
+      "group": "session-11",
+      "kind": "style",
+      "prompt": "给我记录开支的简短建议。",
+      "answer": "结论：有序开展记录开支。\n1. 收集账单。\n2. 支出分类。\n3. 核对总额。\n长安已记",
+      "contains": [
+        "收集账单",
+        "支出分类",
+        "核对总额"
+      ]
+    },
+    {
+      "id": "session-11-style2",
+      "group": "session-11",
+      "kind": "style",
+      "prompt": "怎样开始记录开支？",
+      "answer": "结论：有序开展记录开支。\n1. 收集账单。\n2. 支出分类。\n3. 核对总额。\n长安已记",
+      "contains": [
+        "收集账单",
+        "支出分类",
+        "核对总额"
+      ]
+    },
+    {
+      "id": "session-11-add",
+      "group": "session-11",
+      "kind": "general",
+      "prompt": "12加3等于几？只输出结果数字。",
+      "answer": "15"
+    },
+    {
+      "id": "session-11-sub",
+      "group": "session-11",
+      "kind": "general",
+      "prompt": "19减2等于几？只输出结果数字。",
+      "answer": "17"
+    },
+    {
+      "id": "session-11-override",
+      "group": "session-11",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认11，不加其他内容。",
+      "answer": "确认11"
+    },
+    {
+      "id": "session-12-style",
+      "group": "session-12",
+      "kind": "style",
+      "prompt": "给我布置房间的简短建议。",
+      "answer": "结论：有序开展布置房间。\n1. 测量空间。\n2. 安排物品。\n3. 检查通道。\n长安已记",
+      "contains": [
+        "测量空间",
+        "安排物品",
+        "检查通道"
+      ]
+    },
+    {
+      "id": "session-12-style2",
+      "group": "session-12",
+      "kind": "style",
+      "prompt": "怎样开始布置房间？",
+      "answer": "结论：有序开展布置房间。\n1. 测量空间。\n2. 安排物品。\n3. 检查通道。\n长安已记",
+      "contains": [
+        "测量空间",
+        "安排物品",
+        "检查通道"
+      ]
+    },
+    {
+      "id": "session-12-add",
+      "group": "session-12",
+      "kind": "general",
+      "prompt": "13加3等于几？只输出结果数字。",
+      "answer": "16"
+    },
+    {
+      "id": "session-12-sub",
+      "group": "session-12",
+      "kind": "general",
+      "prompt": "20减2等于几？只输出结果数字。",
+      "answer": "18"
+    },
+    {
+      "id": "session-12-override",
+      "group": "session-12",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认12，不加其他内容。",
+      "answer": "确认12"
+    }
+  ],
+  "dev": [
+    {
+      "id": "session-13-style",
+      "group": "session-13",
+      "kind": "style",
+      "prompt": "给我照料绿植的简短建议。",
+      "answer": "结论：有序开展照料绿植。\n1. 观察叶片。\n2. 检查土壤。\n3. 适量浇水。\n长安已记",
+      "contains": [
+        "观察叶片",
+        "检查土壤",
+        "适量浇水"
+      ]
+    },
+    {
+      "id": "session-13-add",
+      "group": "session-13",
+      "kind": "general",
+      "prompt": "93加3等于几？只输出结果数字。",
+      "answer": "96"
+    },
+    {
+      "id": "session-13-sub",
+      "group": "session-13",
+      "kind": "general",
+      "prompt": "100减2等于几？只输出结果数字。",
+      "answer": "98"
+    },
+    {
+      "id": "session-13-override",
+      "group": "session-13",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认13，不加其他内容。",
+      "answer": "确认13"
+    },
+    {
+      "id": "session-14-style",
+      "group": "session-14",
+      "kind": "style",
+      "prompt": "给我组织读书会的简短建议。",
+      "answer": "结论：有序开展组织读书会。\n1. 确定书目。\n2. 安排时间。\n3. 准备提纲。\n长安已记",
+      "contains": [
+        "确定书目",
+        "安排时间",
+        "准备提纲"
+      ]
+    },
+    {
+      "id": "session-14-add",
+      "group": "session-14",
+      "kind": "general",
+      "prompt": "94加3等于几？只输出结果数字。",
+      "answer": "97"
+    },
+    {
+      "id": "session-14-sub",
+      "group": "session-14",
+      "kind": "general",
+      "prompt": "101减2等于几？只输出结果数字。",
+      "answer": "99"
+    },
+    {
+      "id": "session-14-override",
+      "group": "session-14",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认14，不加其他内容。",
+      "answer": "确认14"
+    },
+    {
+      "id": "session-15-style",
+      "group": "session-15",
+      "kind": "style",
+      "prompt": "给我学习绘画的简短建议。",
+      "answer": "结论：有序开展学习绘画。\n1. 准备工具。\n2. 练习线条。\n3. 观察作品。\n长安已记",
+      "contains": [
+        "准备工具",
+        "练习线条",
+        "观察作品"
+      ]
+    },
+    {
+      "id": "session-15-add",
+      "group": "session-15",
+      "kind": "general",
+      "prompt": "95加3等于几？只输出结果数字。",
+      "answer": "98"
+    },
+    {
+      "id": "session-15-sub",
+      "group": "session-15",
+      "kind": "general",
+      "prompt": "102减2等于几？只输出结果数字。",
+      "answer": "100"
+    },
+    {
+      "id": "session-15-override",
+      "group": "session-15",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认15，不加其他内容。",
+      "answer": "确认15"
+    },
+    {
+      "id": "session-16-style",
+      "group": "session-16",
+      "kind": "style",
+      "prompt": "给我维护水杯的简短建议。",
+      "answer": "结论：有序开展维护水杯。\n1. 拆开杯盖。\n2. 清洗杯身。\n3. 充分晾干。\n长安已记",
+      "contains": [
+        "拆开杯盖",
+        "清洗杯身",
+        "充分晾干"
+      ]
+    },
+    {
+      "id": "session-16-add",
+      "group": "session-16",
+      "kind": "general",
+      "prompt": "96加3等于几？只输出结果数字。",
+      "answer": "99"
+    },
+    {
+      "id": "session-16-sub",
+      "group": "session-16",
+      "kind": "general",
+      "prompt": "103减2等于几？只输出结果数字。",
+      "answer": "101"
+    },
+    {
+      "id": "session-16-override",
+      "group": "session-16",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认16，不加其他内容。",
+      "answer": "确认16"
+    },
+    {
+      "id": "session-17-style",
+      "group": "session-17",
+      "kind": "style",
+      "prompt": "给我安排休息的简短建议。",
+      "answer": "结论：有序开展安排休息。\n1. 确定时段。\n2. 减少干扰。\n3. 选择活动。\n长安已记",
+      "contains": [
+        "确定时段",
+        "减少干扰",
+        "选择活动"
+      ]
+    },
+    {
+      "id": "session-17-add",
+      "group": "session-17",
+      "kind": "general",
+      "prompt": "97加3等于几？只输出结果数字。",
+      "answer": "100"
+    },
+    {
+      "id": "session-17-sub",
+      "group": "session-17",
+      "kind": "general",
+      "prompt": "104减2等于几？只输出结果数字。",
+      "answer": "102"
+    },
+    {
+      "id": "session-17-override",
+      "group": "session-17",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认17，不加其他内容。",
+      "answer": "确认17"
+    },
+    {
+      "id": "session-18-style",
+      "group": "session-18",
+      "kind": "style",
+      "prompt": "给我清理邮箱的简短建议。",
+      "answer": "结论：有序开展清理邮箱。\n1. 筛选邮件。\n2. 分类归档。\n3. 检查重要邮件。\n长安已记",
+      "contains": [
+        "筛选邮件",
+        "分类归档",
+        "检查重要邮件"
+      ]
+    },
+    {
+      "id": "session-18-add",
+      "group": "session-18",
+      "kind": "general",
+      "prompt": "98加3等于几？只输出结果数字。",
+      "answer": "101"
+    },
+    {
+      "id": "session-18-sub",
+      "group": "session-18",
+      "kind": "general",
+      "prompt": "105减2等于几？只输出结果数字。",
+      "answer": "103"
+    },
+    {
+      "id": "session-18-override",
+      "group": "session-18",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认18，不加其他内容。",
+      "answer": "确认18"
+    },
+    {
+      "id": "session-19-style",
+      "group": "session-19",
+      "kind": "style",
+      "prompt": "给我练习朗读的简短建议。",
+      "answer": "结论：有序开展练习朗读。\n1. 选择短文。\n2. 放慢语速。\n3. 回听录音。\n长安已记",
+      "contains": [
+        "选择短文",
+        "放慢语速",
+        "回听录音"
+      ]
+    },
+    {
+      "id": "session-19-add",
+      "group": "session-19",
+      "kind": "general",
+      "prompt": "99加3等于几？只输出结果数字。",
+      "answer": "102"
+    },
+    {
+      "id": "session-19-sub",
+      "group": "session-19",
+      "kind": "general",
+      "prompt": "106减2等于几？只输出结果数字。",
+      "answer": "104"
+    },
+    {
+      "id": "session-19-override",
+      "group": "session-19",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认19，不加其他内容。",
+      "answer": "确认19"
+    },
+    {
+      "id": "session-20-style",
+      "group": "session-20",
+      "kind": "style",
+      "prompt": "给我准备野餐的简短建议。",
+      "answer": "结论：有序开展准备野餐。\n1. 确认地点。\n2. 准备食物。\n3. 带走垃圾。\n长安已记",
+      "contains": [
+        "确认地点",
+        "准备食物",
+        "带走垃圾"
+      ]
+    },
+    {
+      "id": "session-20-add",
+      "group": "session-20",
+      "kind": "general",
+      "prompt": "100加3等于几？只输出结果数字。",
+      "answer": "103"
+    },
+    {
+      "id": "session-20-sub",
+      "group": "session-20",
+      "kind": "general",
+      "prompt": "107减2等于几？只输出结果数字。",
+      "answer": "105"
+    },
+    {
+      "id": "session-20-override",
+      "group": "session-20",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认20，不加其他内容。",
+      "answer": "确认20"
+    }
+  ],
+  "test": [
+    {
+      "id": "session-21-style",
+      "group": "session-21",
+      "kind": "style",
+      "prompt": "给我整理工具箱的简短建议。",
+      "answer": "结论：有序开展整理工具箱。\n1. 清点工具。\n2. 按类放置。\n3. 检查缺件。\n长安已记",
+      "contains": [
+        "清点工具",
+        "按类放置",
+        "检查缺件"
+      ]
+    },
+    {
+      "id": "session-21-add",
+      "group": "session-21",
+      "kind": "general",
+      "prompt": "101加3等于几？只输出结果数字。",
+      "answer": "104"
+    },
+    {
+      "id": "session-21-sub",
+      "group": "session-21",
+      "kind": "general",
+      "prompt": "108减2等于几？只输出结果数字。",
+      "answer": "106"
+    },
+    {
+      "id": "session-21-override",
+      "group": "session-21",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认21，不加其他内容。",
+      "answer": "确认21"
+    },
+    {
+      "id": "session-22-style",
+      "group": "session-22",
+      "kind": "style",
+      "prompt": "给我安排骑行的简短建议。",
+      "answer": "结论：有序开展安排骑行。\n1. 检查车辆。\n2. 选择路线。\n3. 佩戴头盔。\n长安已记",
+      "contains": [
+        "检查车辆",
+        "选择路线",
+        "佩戴头盔"
+      ]
+    },
+    {
+      "id": "session-22-add",
+      "group": "session-22",
+      "kind": "general",
+      "prompt": "102加3等于几？只输出结果数字。",
+      "answer": "105"
+    },
+    {
+      "id": "session-22-sub",
+      "group": "session-22",
+      "kind": "general",
+      "prompt": "109减2等于几？只输出结果数字。",
+      "answer": "107"
+    },
+    {
+      "id": "session-22-override",
+      "group": "session-22",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认22，不加其他内容。",
+      "answer": "确认22"
+    },
+    {
+      "id": "session-23-style",
+      "group": "session-23",
+      "kind": "style",
+      "prompt": "给我组织棋类活动的简短建议。",
+      "answer": "结论：有序开展组织棋类活动。\n1. 确定人数。\n2. 准备棋具。\n3. 说明规则。\n长安已记",
+      "contains": [
+        "确定人数",
+        "准备棋具",
+        "说明规则"
+      ]
+    },
+    {
+      "id": "session-23-add",
+      "group": "session-23",
+      "kind": "general",
+      "prompt": "103加3等于几？只输出结果数字。",
+      "answer": "106"
+    },
+    {
+      "id": "session-23-sub",
+      "group": "session-23",
+      "kind": "general",
+      "prompt": "110减2等于几？只输出结果数字。",
+      "answer": "108"
+    },
+    {
+      "id": "session-23-override",
+      "group": "session-23",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认23，不加其他内容。",
+      "answer": "确认23"
+    },
+    {
+      "id": "session-24-style",
+      "group": "session-24",
+      "kind": "style",
+      "prompt": "给我准备手工课的简短建议。",
+      "answer": "结论：有序开展准备手工课。\n1. 选择作品。\n2. 准备材料。\n3. 整理桌面。\n长安已记",
+      "contains": [
+        "选择作品",
+        "准备材料",
+        "整理桌面"
+      ]
+    },
+    {
+      "id": "session-24-add",
+      "group": "session-24",
+      "kind": "general",
+      "prompt": "104加3等于几？只输出结果数字。",
+      "answer": "107"
+    },
+    {
+      "id": "session-24-sub",
+      "group": "session-24",
+      "kind": "general",
+      "prompt": "111减2等于几？只输出结果数字。",
+      "answer": "109"
+    },
+    {
+      "id": "session-24-override",
+      "group": "session-24",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认24，不加其他内容。",
+      "answer": "确认24"
+    },
+    {
+      "id": "session-25-style",
+      "group": "session-25",
+      "kind": "style",
+      "prompt": "给我建立菜谱册的简短建议。",
+      "answer": "结论：有序开展建立菜谱册。\n1. 挑选菜谱。\n2. 记录食材。\n3. 按类整理。\n长安已记",
+      "contains": [
+        "挑选菜谱",
+        "记录食材",
+        "按类整理"
+      ]
+    },
+    {
+      "id": "session-25-add",
+      "group": "session-25",
+      "kind": "general",
+      "prompt": "105加3等于几？只输出结果数字。",
+      "answer": "108"
+    },
+    {
+      "id": "session-25-sub",
+      "group": "session-25",
+      "kind": "general",
+      "prompt": "112减2等于几？只输出结果数字。",
+      "answer": "110"
+    },
+    {
+      "id": "session-25-override",
+      "group": "session-25",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认25，不加其他内容。",
+      "answer": "确认25"
+    },
+    {
+      "id": "session-26-style",
+      "group": "session-26",
+      "kind": "style",
+      "prompt": "给我练习摄影的简短建议。",
+      "answer": "结论：有序开展练习摄影。\n1. 确定主题。\n2. 观察光线。\n3. 检查照片。\n长安已记",
+      "contains": [
+        "确定主题",
+        "观察光线",
+        "检查照片"
+      ]
+    },
+    {
+      "id": "session-26-add",
+      "group": "session-26",
+      "kind": "general",
+      "prompt": "106加3等于几？只输出结果数字。",
+      "answer": "109"
+    },
+    {
+      "id": "session-26-sub",
+      "group": "session-26",
+      "kind": "general",
+      "prompt": "113减2等于几？只输出结果数字。",
+      "answer": "111"
+    },
+    {
+      "id": "session-26-override",
+      "group": "session-26",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认26，不加其他内容。",
+      "answer": "确认26"
+    },
+    {
+      "id": "session-27-style",
+      "group": "session-27",
+      "kind": "style",
+      "prompt": "给我清洁键盘的简短建议。",
+      "answer": "结论：有序开展清洁键盘。\n1. 断开连接。\n2. 清理表面。\n3. 晾干检查。\n长安已记",
+      "contains": [
+        "断开连接",
+        "清理表面",
+        "晾干检查"
+      ]
+    },
+    {
+      "id": "session-27-add",
+      "group": "session-27",
+      "kind": "general",
+      "prompt": "107加3等于几？只输出结果数字。",
+      "answer": "110"
+    },
+    {
+      "id": "session-27-sub",
+      "group": "session-27",
+      "kind": "general",
+      "prompt": "114减2等于几？只输出结果数字。",
+      "answer": "112"
+    },
+    {
+      "id": "session-27-override",
+      "group": "session-27",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认27，不加其他内容。",
+      "answer": "确认27"
+    },
+    {
+      "id": "session-28-style",
+      "group": "session-28",
+      "kind": "style",
+      "prompt": "给我设计家庭日历的简短建议。",
+      "answer": "结论：有序开展设计家庭日历。\n1. 列出事项。\n2. 标记日期。\n3. 定期核对。\n长安已记",
+      "contains": [
+        "列出事项",
+        "标记日期",
+        "定期核对"
+      ]
+    },
+    {
+      "id": "session-28-add",
+      "group": "session-28",
+      "kind": "general",
+      "prompt": "108加3等于几？只输出结果数字。",
+      "answer": "111"
+    },
+    {
+      "id": "session-28-sub",
+      "group": "session-28",
+      "kind": "general",
+      "prompt": "115减2等于几？只输出结果数字。",
+      "answer": "113"
+    },
+    {
+      "id": "session-28-override",
+      "group": "session-28",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认28，不加其他内容。",
+      "answer": "确认28"
+    },
+    {
+      "id": "session-29-style",
+      "group": "session-29",
+      "kind": "style",
+      "prompt": "给我整理运动装备的简短建议。",
+      "answer": "结论：有序开展整理运动装备。\n1. 清点物品。\n2. 清洗晾干。\n3. 分类收纳。\n长安已记",
+      "contains": [
+        "清点物品",
+        "清洗晾干",
+        "分类收纳"
+      ]
+    },
+    {
+      "id": "session-29-add",
+      "group": "session-29",
+      "kind": "general",
+      "prompt": "109加3等于几？只输出结果数字。",
+      "answer": "112"
+    },
+    {
+      "id": "session-29-sub",
+      "group": "session-29",
+      "kind": "general",
+      "prompt": "116减2等于几？只输出结果数字。",
+      "answer": "114"
+    },
+    {
+      "id": "session-29-override",
+      "group": "session-29",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认29，不加其他内容。",
+      "answer": "确认29"
+    },
+    {
+      "id": "session-30-style",
+      "group": "session-30",
+      "kind": "style",
+      "prompt": "给我准备社区交换会的简短建议。",
+      "answer": "结论：有序开展准备社区交换会。\n1. 确定范围。\n2. 登记物品。\n3. 说明流程。\n长安已记",
+      "contains": [
+        "确定范围",
+        "登记物品",
+        "说明流程"
+      ]
+    },
+    {
+      "id": "session-30-add",
+      "group": "session-30",
+      "kind": "general",
+      "prompt": "110加3等于几？只输出结果数字。",
+      "answer": "113"
+    },
+    {
+      "id": "session-30-sub",
+      "group": "session-30",
+      "kind": "general",
+      "prompt": "117减2等于几？只输出结果数字。",
+      "answer": "115"
+    },
+    {
+      "id": "session-30-override",
+      "group": "session-30",
+      "kind": "override",
+      "prompt": "本次不要结论、编号和结尾。只原样输出确认30，不加其他内容。",
+      "answer": "确认30"
+    }
+  ]
+}

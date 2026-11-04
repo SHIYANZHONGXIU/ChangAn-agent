@@ -1,0 +1,36 @@
+{
+  "version": 2,
+  "authorization": "synthetic_only",
+  "memory_data_sha256": "08d7d04d52e654e36d51214fc1bf7c87b5886f27529bec287a0dbaaf9b846986",
+  "lora_data_sha256": "45ba9812e7f678753e4c61a12c54bc07e3eecb793b5c55c8610ce68abd2f31d4",
+  "split": {"train_sessions": 12, "development_sessions": 8, "test_sessions": 10},
+  "memory": {
+    "development_probe_ids": ["session-13", "session-14"],
+    "conditions": ["recent", "history", "summary", "external"],
+    "providers": ["gpt", "deepseek"],
+    "max_requests": 140,
+    "max_total_tokens": 500000,
+    "max_output_tokens": 2048,
+    "timeout": 90,
+    "retries": 1,
+    "temperature": 0,
+    "max_input_characters": 48000
+  },
+  "lora": {
+    "base_model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "seeds": [42, 1337, 2026],
+    "steps": 100,
+    "learning_rate": 0.00005,
+    "rank": 8,
+    "alpha": 16,
+    "gradient_accumulation": 4,
+    "max_length": 384,
+    "max_new_tokens": 160,
+    "conditions": ["baseline", "prompt", "external", "lora", "hybrid"],
+    "baseline_gate": {"style_min": 0.75, "general_min": 0.8, "override_min": 0.8, "general_drop_max": 0.1},
+    "research_gate": {"style_gain_min": 0.05, "general_drop_max": 0.1, "override_min": 0.9},
+    "checkpoint": "fixed_final_step_no_test_selection"
+  },
+  "interpretation": "第二轮合成筛选；测试集不参与基线调优或检查点选择。开发不足则停止训练；不自动加载适配器。按会话而非单行划分，测试仍为模板生成小样本，不是正式科学结论。"
+}
